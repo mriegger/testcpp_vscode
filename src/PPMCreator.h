@@ -6,7 +6,7 @@
 #include "hlsl.h"
 
 // PPM is the simplest image format. A simple header followed by raw RGB data
-class PPMCreator
+class PPMCreator final
 {
 public:
 
