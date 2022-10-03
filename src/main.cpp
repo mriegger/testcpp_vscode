@@ -1,6 +1,7 @@
 #include "PPMCreator.h"
 #include "Timer.h"
 #include "hlsl.h"
+#include "Colors.h"
 #include <cstdio>
 #include <format>
 #include <iostream>
@@ -34,8 +35,6 @@ int main() {
     v[i] = i;
   }
 
-  double d{1.23456};
-  std::cout << std::format("hello!!! \n this is my double %f\n", d);
 
   return 0;
 }
