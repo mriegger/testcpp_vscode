@@ -1,40 +1,41 @@
-#include <cstdio>
-#include <iostream>
+#include "PPMCreator.h"
 #include "Timer.h"
 #include "hlsl.h"
-#include "PPMCreator.h"
+#include <cstdio>
+#include <format>
+#include <iostream>
 
-void doExpensiveFunction(const int i)
-{
-    PPMCreator p;
-    std::vector<uint8_t> v(128*128*3, 255);    
+void doExpensiveFunction(const int i) {
+  PPMCreator p;
+  std::vector<uint8_t> v(128 * 128 * 3, 255);
 
-    p.SetImageData(std::span<uint8_t>(v), 128);
-    p.Rotate(45);
+  p.SetImageData(std::span<uint8_t>(v), 128);
+  p.Rotate(45);
 
-    //const std::string filename = "../deleteme/hello" + std::to_string(i) + ".ppm"; 
-   // p.Write(filename);
+  // const std::string filename = "../deleteme/hello" + std::to_string(i) +
+  // ".ppm";
+  // p.Write(filename);
 }
 
-int main(){
+#define MKR_PUTS puts("MKR hello!")
 
-    Timer t;
-    t.start();
+int main() {
 
-    int counter = 0;
-    while(t.getElapsedMilliseconds() < 5000)
-    {
-        doExpensiveFunction(++counter);
-    }
+  Timer t;
+  t.start();
 
-    std::vector<int> v(2048,0);
-    for(int i = 0 ; i < 2048 ; ++i)
-    {
-        v[i] = i;
-    }
+  int counter = 0;
+  while (t.getElapsedMilliseconds() < 5000) {
+    doExpensiveFunction(++counter);
+  }
 
-    std::cout << "I did " << counter << " iterations" << std::endl;
+  std::vector<int> v(2048, 0);
+  for (int i = 0; i < 2048; ++i) {
+    v[i] = i;
+  }
 
- 
-    return 0;
+  double d{1.23456};
+  std::cout << std::format("hello!!! \n this is my double %f\n", d);
+
+  return 0;
 }
