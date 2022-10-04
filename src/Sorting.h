@@ -13,7 +13,7 @@ public:
   static void Test() {
     std::vector<int> v = {5, 4, 6, 3, 1, 3, 5, 7, 9, -1, 1, 0, -9};
     MergeSort(v);
-    assert(std::ranges::is_sorted(v));
+    assert(std::is_sorted(v.begin(), v.end()));
   }
 
 private:

@@ -2,6 +2,10 @@
 #include "Timer.h"
 #include "hlsl.h"
 #include "Colors.h"
+#include "RandomNumberGenerator.h"
+#include "ProducerConsumer.h"
+#include "TextureSampling.h"
+#include "Sorting.h"
 #include <cstdio>
 #include <format>
 #include <iostream>
