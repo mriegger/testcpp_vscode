@@ -8,6 +8,8 @@
             "args": [
                 "-fcolor-diagnostics",
                 "-fansi-escape-codes",
+                "-lpthread", // needed by google benchmark
+                "-lbenchmark", // google benchmark
                 // generate debug information
                 "-g",
                 // disable optimization
@@ -38,6 +40,8 @@
             "args": [
                 "-fcolor-diagnostics",
                 "-fansi-escape-codes",
+                "-lpthread", // needed by google benchmark
+                "-lbenchmark", // google benchmark
                 // whole program link optimization
                 "-flto",
                 // -o0 no optimization
@@ -71,6 +75,8 @@
             "args": [
                 "-fcolor-diagnostics",
                 "-fansi-escape-codes",
+                "-lpthread", // needed by google benchmark
+                "-lbenchmark", // google benchmark
                 // whole program link optimization
                 "-flto",
                 // -o0 no optimization
