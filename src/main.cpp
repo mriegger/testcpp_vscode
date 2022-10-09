@@ -9,6 +9,8 @@
 #include <cstdio>
 #include <format>
 #include <iostream>
+#include <benchmark/benchmark.h>
+#include "ExampleGoogleBenchmark.h"
 
 void doExpensiveFunction(const int i) {
   PPMCreator p;
@@ -24,21 +26,45 @@ void doExpensiveFunction(const int i) {
 
 #define MKR_PUTS puts("MKR hello!")
 
+const int& getI(){
+  static int x = 5;
+  return x;
+}
+
 int main() {
 
-  Timer t;
+using namespace std;
+
+Timer t;
+
+  struct alignas(64) Temp {
+    std::vector<int> v;
+  };
+
+  static constexpr int dataSize = 100*1024576;
+  static constexpr int numloops = 100;
+//  std::vector<char> src(dataSize);
+ // std::vector<char> dst(dataSize);
+  Temp src, dst;
+  src.v.resize(dataSize/sizeof(int));
+  dst.v.resize(dataSize/sizeof(int));
   t.start();
-
-  int counter = 0;
-  while (t.getElapsedMilliseconds() < 5000) {
-    doExpensiveFunction(++counter);
+  for(int i =  0; i < numloops ; ++i){
+    std::memcpy(dst.v.data(), src.v.data(), dataSize);
+  //  dst = src;
   }
+  (void)src;
+  (void)dst;
+  auto ms = t.getElapsedMilliseconds();
+  auto avgPerIteration = ms / double(numloops);
+  auto tmp = std::accumulate(dst.v.begin(), dst.v.end(), 0);
 
-  std::vector<int> v(2048, 0);
-  for (int i = 0; i < 2048; ++i) {
-    v[i] = i;
-  }
+  std::cout << "avg ms per copy " << avgPerIteration << std::endl;;
+  std::cout << tmp << std::endl;
+
 
 
   return 0;
 }
+
+//BENCHMARK_MAIN(); 
