@@ -1,6 +1,7 @@
 #pragma once
 
 #include "half.h"
+#include <cstdint>
 #include <algorithm> // std::min
 #include <array>
 #include <cassert>
@@ -18,7 +19,7 @@ inline float clamp(const float val, const float minVal, const float maxVal) {
   }
   return val;
 }
-
+ 
 inline int firstbitlow(uint32_t x) {
   int res = 0;
   while (x) {
@@ -774,8 +775,8 @@ inline float4 operator/(const float4 v, const float f) {
 }
 
 inline void sincos(const float f, float &s, float &c) {
-  s = sinf(f);
-  c = cosf(f);
+  s = static_cast<float>(sinf(f));
+  c = static_cast<float>(cosf(f));
 }
 
 inline constexpr float degrees(const float radians) {
@@ -839,8 +840,8 @@ inline uint reversebits(uint n) {
 
 inline float2 abs(const float2 v) {
   float2 res;
-  res.x = abs(v.x);
-  res.y = abs(v.y);
+  res.x = fabsf(v.x);
+  res.y = fabsf(v.y);
   return res;
 }
 

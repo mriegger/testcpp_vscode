@@ -106,7 +106,7 @@ void PPMCreator::Rotate(const float degrees) {
   const float3x3 invTranslate = {
       1.0, 0.0f, -translateXY.x, 0.0f, 1.0f, -translateXY.y, 0, 0, 1};
 
-  const float3x3 rotate = {cos(rad), -sin(rad), 0.0f, sin(rad), cos(rad),
+  const float3x3 rotate = {cosf(rad), -sinf(rad), 0.0f, sinf(rad), cosf(rad),
                            0.0f,     0,         0,    1};
 
   const float3x3 translate = {
