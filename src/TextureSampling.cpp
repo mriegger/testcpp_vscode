@@ -1,14 +1,10 @@
 #include "TextureSampling.h"
 
-TextureSampling::TextureSampling(const float2 textureDimensions)
-    : m_textureDimensions(textureDimensions) {
-  FillTexture();
-}
-
-float TextureSampling::BilinearSampleReference(const float2 uv) {
+namespace TextureSampling {
+float bilinearSample(const Image &image, const float2 &uv) {
   // From Anki question How is bilinear and trilinear filtering performed?
-  float u = uv.x * m_textureDimensions.x - 0.5f;
-  float v = uv.y * m_textureDimensions.y - 0.5f;
+  float u = uv.x * image.dim.x - 0.5f;
+  float v = uv.y * image.dim.y - 0.5f;
   int x = (int)floor(u);
   int y = (int)floor(v);
   float u_ratio = u - x;
@@ -17,28 +13,30 @@ float TextureSampling::BilinearSampleReference(const float2 uv) {
   float v_opposite = 1 - v_ratio;
 
   float result =
-      (m_texture[x][y] * u_opposite + m_texture[x + 1][y] * u_ratio) *
+      (image.data[x][y] * u_opposite + image.data[x + 1][y] * u_ratio) *
           v_opposite +
-      (m_texture[x][y + 1] * u_opposite + m_texture[x + 1][y + 1] * u_ratio) *
+      (image.data[x][y + 1] * u_opposite + image.data[x + 1][y + 1] * u_ratio) *
           v_ratio;
 
   return result;
 }
 
-void TextureSampling::FillTexture() {
+void fill(Image &image) {
   float startValue = 1;
-  m_texture.resize((size_t)m_textureDimensions.y);
-  for (auto &row : m_texture) {
-    row.resize((size_t)m_textureDimensions.x);
-    FillRow(row, startValue);
-    startValue += m_textureDimensions.x;
+  image.data.resize((size_t)image.dim.y);
+  for (auto &row : image.data) {
+    row.resize((size_t)image.dim.x);
+    fillRow(image, row, startValue);
+    startValue += image.dim.x;
   }
 }
 
-void TextureSampling::FillRow(std::vector<float> &row, const float startValue) {
+void fillRow(Image &image, std::vector<float> &row, const float startValue) {
   float currValue = startValue;
   for (size_t i = 0; i < row.size(); ++i) {
     row[i] = currValue;
     currValue += 1.0f;
   }
 }
+
+} // namespace TextureSampling
