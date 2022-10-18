@@ -5,7 +5,7 @@
 #include <set>
 
 // https://www.youtube.com/watch?v=0SeUPb8LC9I
-class SpaceshipOperator {
+class SpaceshipOperator final {
 public:
   static void Test() {
     struct Data {

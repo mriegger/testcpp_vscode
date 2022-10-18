@@ -33,9 +33,6 @@ const int& getI(){
 
 int main() {
 
-using namespace std;
-
-Timer t;
 
   struct alignas(64) Temp {
     std::vector<int> v;
@@ -48,14 +45,15 @@ Timer t;
   Temp src, dst;
   src.v.resize(dataSize/sizeof(int));
   dst.v.resize(dataSize/sizeof(int));
-  t.start();
+  const auto startTime = Timer::now();
   for(int i =  0; i < numloops ; ++i){
     std::memcpy(dst.v.data(), src.v.data(), dataSize);
   //  dst = src;
   }
   (void)src;
   (void)dst;
-  auto ms = t.getElapsedMilliseconds();
+  auto ms = Timer::getElapsedMilliseconds(startTime);
+  
   auto avgPerIteration = ms / double(numloops);
   auto tmp = std::accumulate(dst.v.begin(), dst.v.end(), 0);
 
