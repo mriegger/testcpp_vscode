@@ -2,23 +2,21 @@
 
 #include <chrono>
 
-class Timer final {
-public:
-  Timer() { start(); }
+namespace Timer {
+using TimePoint = std::chrono::time_point<std::chrono::system_clock>;
 
-  void start() { startTime_ = std::chrono::system_clock::now(); }
+inline TimePoint now() { return std::chrono::system_clock::now(); }
 
-  double getElapsedSeconds() const {
-    std::chrono::duration<double, std::milli> ms =
-        std::chrono::system_clock::now() - startTime_;
-    return ms.count() * 0.001;
-  }
-  double getElapsedMilliseconds() const {
-    std::chrono::duration<double, std::milli> ms =
-        std::chrono::system_clock::now() - startTime_;
-    return ms.count();
-  }
+inline double elapsedSeconds(const TimePoint &start) {
+  std::chrono::duration<double, std::milli> ms =
+      std::chrono::system_clock::now() - start;
+  return ms.count() * 0.001;
+}
 
-private:
-  std::chrono::time_point<std::chrono::system_clock> startTime_;
-};
+inline double getElapsedMilliseconds(const TimePoint &start) {
+  std::chrono::duration<double, std::milli> ms =
+      std::chrono::system_clock::now() - start;
+  return ms.count();
+}
+
+}; // namespace Timer
