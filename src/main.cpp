@@ -11,7 +11,11 @@
 #include <benchmark/benchmark.h>
 #include <cstdio>
 #include <format>
+
+#if __has_include(<gtest/gtest.h>)
 #include <gtest/gtest.h>
+#endif
+
 #include <iostream>
 
 void doExpensiveFunction(const int i) {
@@ -67,8 +71,8 @@ BinarySearch::Test();
 
   */
 
-	testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
+//	testing::InitGoogleTest(&argc, argv);
+//	return RUN_ALL_TESTS();
 
   return 0;
 }
