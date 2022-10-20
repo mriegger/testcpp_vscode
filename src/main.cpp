@@ -5,11 +5,13 @@
 #include "RandomNumberGenerator.h"
 #include "Sorting.h"
 #include "TextureSampling.h"
+#include "BinarySearch.h"
 #include "Timer.h"
 #include "hlsl.h"
 #include <benchmark/benchmark.h>
 #include <cstdio>
 #include <format>
+#include <gtest/gtest.h>
 #include <iostream>
 
 void doExpensiveFunction(const int i) {
@@ -31,8 +33,9 @@ const int &getI() {
   return x;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 
+BinarySearch::Test();
   doExpensiveFunction(100);
 
   /*
@@ -63,6 +66,9 @@ int main() {
     std::cout << tmp << std::endl;
 
   */
+
+	testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
 
   return 0;
 }
