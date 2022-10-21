@@ -1,13 +1,18 @@
 #include <gtest/gtest.h>
 
-TEST(A, B)
-{
-    EXPECT_TRUE(1);
-}
+struct TestFixtureExample : public ::testing::Test {
 
-int main(int argc, char* argv[])
-{
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
+  void SetUp() override {}
 
+  void TearDown() override {}
+};
+
+TEST_F(TestFixtureExample, Hello) {}
+
+TEST(A, B) {}
+TEST(A, C) {}
+
+int main(int argc, char *argv[]) {
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
