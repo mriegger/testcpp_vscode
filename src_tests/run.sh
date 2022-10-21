@@ -1,0 +1,1 @@
+./a.out --gtest_repeat=1 --gtest_shuffle
