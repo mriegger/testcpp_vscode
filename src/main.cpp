@@ -12,10 +12,6 @@
 #include <cstdio>
 #include <format>
 
-#if __has_include(<gtest/gtest.h>)
-#include <gtest/gtest.h>
-#endif
-
 #include <iostream>
 
 void doExpensiveFunction(const int i) {
@@ -39,18 +35,17 @@ const int &getI() {
 
 int main(int argc, char* argv[]) {
 
-BinarySearch::Test();
-  doExpensiveFunction(100);
+    BinarySearch::Test();
+    doExpensiveFunction(100);
 
-  /*
     struct alignas(64) Temp {
       std::vector<int> v;
     };
 
     static constexpr int dataSize = 100*1024576;
     static constexpr int numloops = 100;
-  //  std::vector<char> src(dataSize);
-   // std::vector<char> dst(dataSize);
+    // std::vector<char> src(dataSize);
+    // std::vector<char> dst(dataSize);
     Temp src, dst;
     src.v.resize(dataSize/sizeof(int));
     dst.v.resize(dataSize/sizeof(int));
@@ -69,12 +64,8 @@ BinarySearch::Test();
     std::cout << "avg ms per copy " << avgPerIteration << std::endl;;
     std::cout << tmp << std::endl;
 
-  */
 
-//	testing::InitGoogleTest(&argc, argv);
-//	return RUN_ALL_TESTS();
 
   return 0;
 }
 
-// BENCHMARK_MAIN();
