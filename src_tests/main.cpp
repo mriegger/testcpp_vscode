@@ -7,10 +7,9 @@ struct TestFixtureExample : public ::testing::Test {
   void TearDown() override {}
 };
 
-TEST_F(TestFixtureExample, Hello) {}
+TEST_F(TestFixtureExample, FixtureExample) {}
 
-TEST(A, B) {}
-TEST(A, C) {}
+TEST(MKR, StandaloneExample) {}
 
 int main(int argc, char *argv[]) {
   testing::InitGoogleTest(&argc, argv);
