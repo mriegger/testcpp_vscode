@@ -11,6 +11,7 @@ struct TestFixtureExample : public ::testing::Test {
 TEST_F(TestFixtureExample, FixtureExample) {
 
   EXPECT_TRUE(1);
+  EXPECT_FALSE(0);
   EXPECT_EQ(1, 1);
   EXPECT_NE(-1, 1);
   EXPECT_FLOAT_EQ(1.0001f, 1.0001f);
