@@ -2,6 +2,11 @@
 
 #include <random>
 
+// Example use:
+
+// rng::engine e;
+// float f = randomFloat(e, 1.0f, 2.0f); 
+
 namespace rng {
 using engine = std::default_random_engine;
 
