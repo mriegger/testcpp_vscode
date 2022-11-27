@@ -463,7 +463,7 @@ struct uint4 {
     this->z = static_cast<uint>(z);
     this->w = static_cast<uint>(w);
   }
-  uint4(int x, int y, int z, int w) : x(x), y(y), z(z), w(w) {}
+  uint4(int x, int y, int z, int w) : x(static_cast<uint>(x)), y(static_cast<uint>(y)), z(static_cast<uint>(z)), w(static_cast<uint>(w)) {}
   uint4(float4 v) {
     this->x = static_cast<uint>(v.x);
     this->y = static_cast<uint>(v.y);
@@ -591,7 +591,7 @@ struct int3 {
 
   int3(const int2 v, const int s) : x(v.x), y(v.y), z(s) {}
 
-  int3(const uint3 v) : x(v.x), y(v.y), z(v.z) {}
+  int3(const uint3 v) : x(static_cast<int>(v.x)), y(static_cast<int>(v.y)), z(static_cast<int>(v.z)) {}
 };
 
 inline int3 operator+(const int3 a, const int3 b) {
@@ -630,7 +630,7 @@ struct float3x3 {
     m_rows[2][2] = i;
   }
 
-  void SetRow(int row, float a, float b, float c) {
+  void SetRow(size_t row, float a, float b, float c) {
     assert(row >= 0 && row < 3);
     m_rows[row] = float3(a, b, c);
   }
@@ -673,7 +673,7 @@ struct float4x4 {
 
   const float4 &operator[](std::size_t idx) const { return m_rows[idx]; }
 
-  void SetRow(int row, float a, float b, float c, float d) {
+  void SetRow(const size_t row, const float a, const float b, const float c, const float d) {
     assert(row >= 0 && row < 4);
     m_rows[row] = float4(a, b, c, d);
   }
@@ -871,8 +871,8 @@ inline void GroupMemoryBarrierWithGroupSync() {}
 
 inline float3x3 transpose(const float3x3 &m) {
   float3x3 res{};
-  for (int row = 0; row < 3; ++row) {
-    for (int col = 0; col < 3; ++col) {
+  for (size_t row = 0; row < 3; ++row) {
+    for (size_t col = 0; col < 3; ++col) {
       res.m_rows[col][row] = m.m_rows[row][col];
     }
   }
@@ -881,8 +881,8 @@ inline float3x3 transpose(const float3x3 &m) {
 
 inline float4x4 transpose(const float4x4 &m) {
   float4x4 res{};
-  for (int row = 0; row < 4; ++row) {
-    for (int col = 0; col < 4; ++col) {
+  for (size_t row = 0; row < 4; ++row) {
+    for (size_t col = 0; col < 4; ++col) {
       res.m_rows[col][row] = m.m_rows[row][col];
     }
   }

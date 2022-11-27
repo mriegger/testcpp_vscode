@@ -17,7 +17,7 @@ float4x4 MakePerspectiveFovMatrixRH(float fovY, float aspectRatio,
                             // ratio must be greater than 0");
   if (!(nearDist > 0 && farDist > nearDist && fovY > FloatEpsilon &&
         aspectRatio > FloatEpsilon)) {
-    for (int i = 0; i < 4; ++i) {
+    for (size_t i = 0; i < 4; ++i) {
       out.SetRow(i, 0, 0, 0, 0);
     }
     return out;
@@ -51,7 +51,7 @@ float4x4 MakeOrthographicMatrixRH(float left, float right, float bottom,
   float4x4 out;
 
   if (!(right > left /*&& top > bottom && farDist > nearDist*/)) {
-    for (int i = 0; i < 4; ++i) {
+    for (size_t i = 0; i < 4; ++i) {
       out.SetRow(i, 0, 0, 0, 0);
     }
     return out;

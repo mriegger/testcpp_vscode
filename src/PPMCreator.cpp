@@ -6,13 +6,13 @@
 namespace {
 static constexpr std::string_view MagicNumber = "P6\n";
 static constexpr std::string_view MaxValue = "255\n";
-static constexpr int NumColorChannels = 3;
+static constexpr size_t NumColorChannels = 3;
 
 void WritePPMHeader(std::ofstream &f, const size_t width, const size_t height) {
   f.write(MagicNumber.data(), MagicNumber.size());
   const std::string widthHeightStr =
       std::to_string(width) + " " + std::to_string(height) + "\n";
-  f.write(widthHeightStr.data(), widthHeightStr.size());
+  f.write(widthHeightStr.data(), (std::streamsize)widthHeightStr.size());
   f.write(MaxValue.data(), MaxValue.size());
 }
 } // namespace
@@ -25,11 +25,11 @@ void write(const Image &image, const std::string_view filename) {
   f.open(filename.data(), ios::out | ios::binary);
   WritePPMHeader(f, image.width, image.height);
   f.write(reinterpret_cast<const char *>(image.imageData.data()),
-          image.imageData.size());
+          (std::streamsize)image.imageData.size());
   f.close();
 }
 
-float3 getPixel(const Image &image, const int x, const int y) {
+float3 getPixel(const Image &image, const size_t x, const size_t y) {
   if (x < 0 || y < 0 || x >= image.width || y >= image.height) {
     std::cerr << "PPMCreator::getPixel() called with out of bounds data"
               << std::endl;
@@ -62,8 +62,8 @@ Image rotate(const Image &image, const float degrees) {
 
   float3x3 final = mul(rotate, invTranslate);
   final = mul(translate, final);
-  for (int y = 0; y < image.height; ++y) {
-    for (int x = 0; x < image.width; ++x) {
+  for (size_t y = 0; y < image.height; ++y) {
+    for (size_t x = 0; x < image.width; ++x) {
       const float3 color = getPixel(image, x, y);
       const float3 srcVertex(x, y, 1);
       const float3 destVertex = mul(final, srcVertex);
@@ -72,17 +72,16 @@ Image rotate(const Image &image, const float degrees) {
           destVertex.x < image.width && destVertex.y < image.height) {
 
         const auto index = (x + y * image.width) * NumColorChannels;
-        result.imageData[index + 0] = color.x * 255;
-        result.imageData[index + 1] = color.y * 255;
-        result.imageData[index + 2] = color.z * 255;
+        result.imageData[index + 0] = (uint8_t)(color.x * 255);
+        result.imageData[index + 1] = (uint8_t)(color.y * 255);
+        result.imageData[index + 2] = (uint8_t)(color.z * 255);
       }
     }
   }
   return result;
 }
 
-Image load(const std::string_view filename, const int width,
-           const std::span<uint8_t> rgbData) {
+Image load(const std::string_view filename, const size_t width) {
 
   Image image;
 
@@ -95,7 +94,7 @@ Image load(const std::string_view filename, const int width,
   WritePPMHeader(f, width, height);
 
   f.write(reinterpret_cast<const char *>(image.imageData.data()),
-          image.imageData.size());
+          (std::streamsize)image.imageData.size());
   f.close();
   return image;
 }

@@ -11,8 +11,8 @@ auto LowerBound(const std::vector<int> &v, const int target) {
   int best = (int)v.size();
 
   while (left <= right) {
-    const auto mid = left + (right - left) / 2;
-    const bool targetGreaterMid = v[mid] < target;
+    const int mid = left + (right - left) / 2;
+    const bool targetGreaterMid = v[(size_t)mid] < target;
     if (targetGreaterMid) {
       left = mid + 1;
     } else {
@@ -30,7 +30,7 @@ template <typename T> auto UpperBound(const std::vector<T> &v, const T target) {
 
   while (left <= right) {
     const T mid = left + (right - left) / 2;
-    const bool targetLessMid = target < v[mid];
+    const bool targetLessMid = target < v[(size_t)mid];
     if (targetLessMid) {
       best = mid;
       right = mid - 1;

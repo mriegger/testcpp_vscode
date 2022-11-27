@@ -22,10 +22,10 @@ void ProducerConsumer::ProducerFunc(const int id) {
                            [&]() { return m_workerThreadAllowedToProcess; });
   lck.unlock();
 
-  int numPushed = 0;
+  size_t numPushed = 0;
   while (numPushed < NumDataProducedByEachThread) {
     std::this_thread::yield();
-    std::unique_lock<std::mutex> lck(m_mutex);
+    std::unique_lock<std::mutex> lck2(m_mutex);
     m_queue.push_back(id);
     numPushed++;
   }

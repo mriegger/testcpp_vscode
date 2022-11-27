@@ -52,7 +52,7 @@ FLOAT32 FLOAT16::ToFloat32(FLOAT16 rhs)
     else if (0x8000 == rhs.m_uiFormat) return -0.0f;      // -zero
 
     UINT32 uiHalfSignBit = GET_HALF_SIGN_BIT(rhs.m_uiFormat);
-    UINT32 uiHalfMantBits = GET_HALF_MANT_BITS(rhs.m_uiFormat) << 13;
+    UINT32 uiHalfMantBits = (UINT32)(GET_HALF_MANT_BITS(rhs.m_uiFormat) << 13);
     INT32  iHalfExpBits = GET_HALF_EXP_BITS(rhs.m_uiFormat);
 
     //
@@ -205,7 +205,7 @@ FLOAT32 FLOAT16::ToFloat32Fast(FLOAT16 rhs)
     else if (0x8000 == rhs.m_uiFormat) return -0.0f;      // -zero
 
     UINT32 uiHalfSignBit = GET_HALF_SIGN_BIT(rhs.m_uiFormat);
-    UINT32 uiHalfMantBits = GET_HALF_MANT_BITS(rhs.m_uiFormat) << 13;
+    UINT32 uiHalfMantBits = (UINT32)(GET_HALF_MANT_BITS(rhs.m_uiFormat) << 13);
     INT32  iHalfExpBits = GET_HALF_EXP_BITS(rhs.m_uiFormat);
 
     //

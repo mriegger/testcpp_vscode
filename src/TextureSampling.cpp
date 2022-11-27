@@ -5,8 +5,8 @@ float bilinearSample(const Image &image, const float2 &uv) {
   // From Anki question How is bilinear and trilinear filtering performed?
   float u = uv.x * image.dim.x - 0.5f;
   float v = uv.y * image.dim.y - 0.5f;
-  int x = (int)floor(u);
-  int y = (int)floor(v);
+  size_t x = (size_t)floor(u);
+  size_t y = (size_t)floor(v);
   float u_ratio = u - x;
   float v_ratio = v - y;
   float u_opposite = 1 - u_ratio;
@@ -26,12 +26,12 @@ void fill(Image &image) {
   image.data.resize((size_t)image.dim.y);
   for (auto &row : image.data) {
     row.resize((size_t)image.dim.x);
-    fillRow(image, row, startValue);
+    fillRow(row, startValue);
     startValue += image.dim.x;
   }
 }
 
-void fillRow(Image &image, std::vector<float> &row, const float startValue) {
+void fillRow(std::vector<float> &row, const float startValue) {
   float currValue = startValue;
   for (size_t i = 0; i < row.size(); ++i) {
     row[i] = currValue;

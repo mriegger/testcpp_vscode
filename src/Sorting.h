@@ -25,12 +25,12 @@ private:
     int middle = left + (right - left) / 2;
     MergeSort(v, left, middle);
     MergeSort(v, middle + 1, right);
-    const auto merged = Merge(v, left, middle, middle + 1, right);
+    const auto merged = Merge(v, (size_t)left, (size_t)middle, (size_t)middle + 1, (size_t)right);
     std::copy(merged.begin(), merged.end(), v.begin() + left);
   }
 
-  static std::vector<int> Merge(std::vector<int> &v, int a, int b, int c,
-                                int d) {
+  static std::vector<int> Merge(std::vector<int> &v, size_t a, size_t b, size_t c,
+                                size_t d) {
     std::vector<int> result;
     while (a <= b && c <= d) {
       if (v[a] <= v[c]) {

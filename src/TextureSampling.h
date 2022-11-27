@@ -12,5 +12,5 @@ struct Image {
 float bilinearSample(const Image &image, const float2 &uv);
 
 void fill(Image &image);
-void fillRow(Image &image, std::vector<float> &row, const float startValue);
+void fillRow(std::vector<float> &row, const float startValue);
 } // namespace TextureSampling

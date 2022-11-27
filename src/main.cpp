@@ -1,3 +1,4 @@
+#include "BinarySearch.h"
 #include "Colors.h"
 #include "ExampleGoogleBenchmark.h"
 #include "PPMCreator.h"
@@ -5,15 +6,24 @@
 #include "RandomNumberGenerator.h"
 #include "Sorting.h"
 #include "TextureSampling.h"
-#include "BinarySearch.h"
 #include "Timer.h"
 #include "hlsl.h"
+#include <any>
 #include <benchmark/benchmark.h>
+#include <cassert>
 #include <cstdio>
 #include <format>
+#include <functional>
+#include <future>
+#include <list>
+#include <memory>
+#include <numeric>
+#include <stdexcept>
+#include <typeindex>
+#include <unordered_map>
 
 #include <iostream>
-
+using namespace std;
 void doExpensiveFunction(const int i) {
 
   const std::string filename = "../deleteme/hello" + std::to_string(i) + ".ppm";
@@ -26,46 +36,24 @@ void doExpensiveFunction(const int i) {
   // ppm::write(image, filename);
 }
 
-#define MKR_PUTS puts("MKR hello!")
+void doSomething2() { throw std::invalid_argument("fmnwkjmk"); }
 
-const int &getI() {
-  static int x = 5;
-  return x;
+void doSomething() {
+  try {
+    doSomething2();
+  } catch (const std::invalid_argument &e) {
+    puts("caught exception");
+    cout << e.what() << endl;
+    throw;
+  }
 }
 
-int main(int argc, char* argv[]) {
 
-    BinarySearch::Test();
-    doExpensiveFunction(100);
+int main(int , char *[]) {
 
-    struct alignas(64) Temp {
-      std::vector<int> v;
-    };
-
-    static constexpr int dataSize = 100*1024576;
-    static constexpr int numloops = 100;
-    // std::vector<char> src(dataSize);
-    // std::vector<char> dst(dataSize);
-    Temp src, dst;
-    src.v.resize(dataSize/sizeof(int));
-    dst.v.resize(dataSize/sizeof(int));
-    const auto startTime = Timer::now();
-    for(int i =  0; i < numloops ; ++i){
-      std::memcpy(dst.v.data(), src.v.data(), dataSize);
-    //  dst = src;
-    }
-    (void)src;
-    (void)dst;
-    auto ms = Timer::getElapsedMilliseconds(startTime);
-
-    auto avgPerIteration = ms / double(numloops);
-    auto tmp = std::accumulate(dst.v.begin(), dst.v.end(), 0);
-
-    std::cout << "avg ms per copy " << avgPerIteration << std::endl;;
-    std::cout << tmp << std::endl;
-
-
+  uint16_t h = 12324;
+  auto temp = h << 13;
+  cout << temp << endl;
 
   return 0;
 }
-
