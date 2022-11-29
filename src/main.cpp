@@ -1,3 +1,4 @@
+#include "printf_howto.h"
 #include "BinarySearch.h"
 #include "Colors.h"
 #include "ExampleGoogleBenchmark.h"
@@ -51,9 +52,7 @@ void doSomething() {
 
 int main(int , char *[]) {
 
-  uint16_t h = 12324;
-  auto temp = h << 13;
-  cout << temp << endl;
+  printf_howto::displayExamples();
 
   return 0;
 }
